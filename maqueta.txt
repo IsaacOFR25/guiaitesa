@@ -1,0 +1,116 @@
+#include <Adafruit_NeoPixel.h>
+
+#define PIN_LED_ROJO 13   // Pin al que está conectada la tira LED roja
+#define PIN_LED_VERDE 10  // Pin al que está conectada la tira LED verde
+#define PIN_LED_MORADO_1 12 // Primer pin al que está conectada la tira LED morada
+#define PIN_LED_MORADO_2 11 // Segundo pin al que está conectada la tira LED morada
+#define NUM_LEDS 60       // Número de LEDs en tu tira LED (cualquier valor aquí, ya que no estamos usando la tira LED en Arduino)
+
+Adafruit_NeoPixel TiraRoja = Adafruit_NeoPixel(NUM_LEDS, PIN_LED_ROJO, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel TiraVerde = Adafruit_NeoPixel(NUM_LEDS, PIN_LED_VERDE, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel TiraMorado1 = Adafruit_NeoPixel(NUM_LEDS, PIN_LED_MORADO_1, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel TiraMorado2 = Adafruit_NeoPixel(NUM_LEDS, PIN_LED_MORADO_2, NEO_GRB + NEO_KHZ800);
+
+void setup() {
+  TiraRoja.begin();
+  TiraRoja.show();      // Apagar todos los LEDs al principio
+  TiraVerde.begin();
+  TiraVerde.show();     // Apagar todos los LEDs al principio
+  TiraMorado1.begin();
+  TiraMorado1.show();   // Apagar todos los LEDs al principio
+  TiraMorado2.begin();
+  TiraMorado2.show();   // Apagar todos los LEDs al principio
+  Serial.begin(9600);   // Iniciar comunicación serial a 9600 baudios
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    char receivedChar = Serial.read();
+    if (receivedChar == '1') {
+      encenderLED(TiraRoja, TiraRoja.Color(255, 0, 0)); // Encender la tira LED roja en rojo
+      delay(5000); // Esperar 5 segundos
+      apagarLED(TiraRoja); // Apagar la tira LED roja
+    } else if (receivedChar == '2') {
+      encenderLED(TiraMorado1, TiraMorado1.Color(128, 0, 128)); // Encender la tira LED morada en morado
+      encenderLED(TiraMorado2, TiraMorado2.Color(128, 0, 128)); // Encender la tira LED morada en morado
+      delay(5000); // Esperar 5 segundos
+      apagarLED(TiraMorado1); // Apagar la tira LED morada
+      apagarLED(TiraMorado2); // Apagar la tira LED morada
+    } else if (receivedChar == '3') {
+      encenderLED(TiraVerde, TiraVerde.Color(0, 0, 255)); // Encender la tira LED verde en azul
+      encenderLED(TiraMorado2, TiraMorado2.Color(0, 0, 255)); // Encender la tira LED verde en azul
+      delay(5000); // Esperar 5 segundos
+      apagarLED(TiraVerde); // Apagar la tira LED azul
+      apagarLED(TiraMorado2); // Apagar la tira LED azul
+    }
+  }
+}
+
+void encenderLED(Adafruit_NeoPixel &strip, uint32_t color) {
+  for (int i = 0; i < strip.numPixels(); i++) {
+    strip.setPixelColor(i, color); // Establecer color en todos los LEDs
+  }
+  strip.show();
+}
+
+void apagarLED(Adafruit_NeoPixel &strip) {
+  for (int i = 0; i < strip.numPixels(); i++) {
+    strip.setPixelColor(i, 0); // Apagar todos los LEDs
+  }
+  strip.show();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#Este es el bueno
+import serial
+import re
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import time
+
+def create_web_driver():
+    options = Options()
+    driver = webdriver.Chrome(options=options)
+    return driver
+
+# Conectarse al Arduino
+ser = serial.Serial('COM4', 9600)  # Reemplaza 'COMX' con el puerto adecuado
+
+driver = create_web_driver()
+driver.get("https://guia-phi.vercel.app/")
+
+guardar_url = driver.current_url
+edificio_1_activado = False  # Variable para rastrear si el edificio 1 está activado
+
+while True:
+    time.sleep(1)
+    if guardar_url != driver.current_url:
+        print("URL anterior:", guardar_url)
+        print("URL actual:", driver.current_url)
+        guardar_url = driver.current_url
+        
+        if "_x31_,_x32_" in driver.current_url:
+            print("Se ha activado el camino hacia el Edificio A")
+            edificio_1_activado = True
+            ser.write(b'1')  # Enciende el pin 13
+        
+        elif "_x35_,_x32_4,_x32_5,_x32_7" in driver.current_url:
+            print("Se ha activado el camino hacia el Edificio C")
+            ser.write(b'2')  # Enciende el pin 12
+            edificio_1_activado = False  # Reinicia el estado del edificio 1
+        
+        elif "_x35_,_x31_6,_x31_7,_x32_0,_x32_5,_x32_7" in driver.current_url:
+            if not edificio_1_activado:
+                print("Se ha activado el camino hacia el polideportivo")
+                ser.write(b'3')  # Enciende el pin 11
+            #edificio_1_activado = False  # Reinicia el estado del edificio 1

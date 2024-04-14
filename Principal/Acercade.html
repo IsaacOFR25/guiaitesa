@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>Contenido Insertado</title>
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        color: #333;
+        line-height: 1.1; /* Interlineado muy reducido */
+    }
+
+    #nuevoDiv {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 15px; /* Establece las esquinas redondeadas */
+    }
+
+    h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    p, ul, li {
+        font-size: 16px;
+        margin-bottom: 5px; /* Espacio entre los párrafos y elementos li */
+        text-align: justify; /* Texto justificado */
+    }
+
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    .team-member {
+        background-color: #f2f2f2;
+        padding: 5px;
+        margin-bottom: 5px;
+        border-radius: 5px;
+        width: calc(50% - 10px); /* Ancho de la mitad del contenedor, menos el espacio entre tarjetas */
+        display: inline-block;
+        box-sizing: border-box;
+    }
+
+    .team-member p {
+        margin: 3px 0; /* Espacio entre líneas de texto */
+    }
+
+    /* Estilo del botón Mostrar documentación */
+    #botonWrapper {
+        text-align: center;
+        margin-top: 20px; /* Mover el botón hacia abajo */
+    }
+
+    #ManualUser {
+        background-color: #037870;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold; /* Texto en negrita */
+    }
+
+    #reiniciarUbicacion:hover {
+        background-color: #048c8c;
+    }
+  </style>
+</head>
+<body>
+  <div id="nuevoDiv">
+    <h1>Sistema de Ubicación en ITESA</h1>
+    <h2>Acerca de</h2>
+    <p>Proyecto de navegación enfocado en las ubicaciones de edificios dentro del Instituto Tecnológico Superior del Oriente (ITESA).</p>
+    <h2>Equipo de Trabajo</h2>
+    <div class="team-row">
+        <div class="team-member">
+            <p><strong>Isaac Francisco Ortega Romero</strong></p>
+            <p>Estudiante de 8vo semestre en ISC</p>
+        </div>
+        <div class="team-member">
+            <p><strong>José Manuel Alvarado H.</strong></p>
+            <p>Estudiante de 8vo semestre en ISC</p>
+        </div>
+    </div>
+    <div class="team-row">
+        <div class="team-member">
+            <p><strong>Luis Alberto Escorcia Briones</strong></p>
+            <p>Estudiante de 8vo semestre en ISC</p>
+        </div>
+        <div class="team-member">
+            <p><strong>Dr. German Cuaya</strong></p>
+            <p>Docente</p>
+        </div>
+    </div>
+    <p>Una vez seleccionada la opción, podrás visualizar en tiempo real en la maqueta institucional la ruta elegida, mientras se encienden las tiras LED correspondientes.</p>
+    <p>Para obtener más información acerca del proyecto o de cómo usar esta plataforma, navega a través de la barra de menú o en su defecto accede a la documentación.</p>
+
+    <!-- Wrapper para centrar el botón -->
+    <div id="botonWrapper">
+        <!-- Botón Mostrar documentación -->
+        <button id="ManualUser">Mostrar documentación</button>
+    </div>
+  </div>
+
+  <script>
+    $("#ManualUser").click(function() {
+        alert("Se abre la documentación");
+    });
+  </script>
+</body>
+</html>

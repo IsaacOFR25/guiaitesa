@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>Ubicación en ITESA</title>
+  <style>
+    /* Estilos generales */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif; /* Ajusta la fuente según tus preferencias */
+    }
+
+    /* Estilos para la barra de menú */
+    header {
+      background-color: #fff; /* Cambia el color de fondo a blanco */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Agrega sombra */
+      padding: 10px 20px; /* Ajusta el relleno según tus necesidades */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 4px solid #027970; /* Agrega borde inferior de color verde oscuro */
+    }
+
+    .menu ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .menu ul li {
+      margin-right: 20px;
+    }
+
+    .menu ul li:last-child {
+      margin-right: 0;
+    }
+
+    .menu ul li a {
+      display: block;
+      padding: 10px;
+      color: #027970;
+      text-decoration: none;
+      transition: background-color 0.3s, color 0.3s;
+      border-radius: 150px;
+    }
+
+    .menu ul li a:hover {
+      background-color: #027970;
+      color: white;
+    }
+
+    /* Estilos para el contenedor de los divs */
+    .contenedor {
+      display: flex;
+      justify-content: space-between;
+      padding: 15px;
+    }
+
+    /* Estilos para los divs redondeados */
+    .div-redondeado {
+      width: 60%; /* Ajusta el ancho según tus necesidades */
+      height: 690px; /* Ajusta la altura según tus necesidades */
+      background-color: white; /* Cambia el color de fondo según tus necesidades */
+      border-radius: 15px; /* Establece las esquinas redondeadas */
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Agrega sombreado en los cuatro lados */
+    }
+    .div-redondeado2 {
+        width: 39%; /* Ajusta el ancho según tus necesidades */
+        height: 690px; /* Ajusta la altura según tus necesidades */
+        background-color: white; /* Cambia el color de fondo según tus necesidades */
+        border-radius: 15px; /* Establece las esquinas redondeadas */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Agrega sombreado en los cuatro lados */
+      }
+  </style>
+</head>
+<body>
+  <header class="menu">
+    <ul>
+      <li><a href="#" id="inicio">Inicio</a></li>
+      <li><a href="#" id="acerca">Acerca de</a></li>
+      <li><a href="#" id="ayuda">Ayuda</a></li>
+    </ul>
+  </header>
+  <div class="contenedor">
+    <div class="div-redondeado" id="Mapa"></div>
+    <div class="div-redondeado2" id="info"></div>
+  </div>
+</body>
+
+
+<script>
+    $(document).ready(function() {
+        $("#Mapa").load("Administrador2.html");
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $("#info").load("Instrucciones.html");
+    });
+</script>
+
+<script>
+    $("#inicio").click(function() {
+        $("#Mapa").load("Administrador2.html");
+    });
+</script>
+
+<script>
+    $("#ayuda").click(function() {
+        $("#info").load("Instrucciones.html");
+    });
+</script>
+
+<script>
+    $("#acerca").click(function() {
+        $("#info").load("Acercade.html");
+    });
+</script>
+
+<script>
+    $("#inicio").click(function() {
+        location.reload();
+        location.href = location.origin + location.pathname;
+    });
+</script>
+</html>

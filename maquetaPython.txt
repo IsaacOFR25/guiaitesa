@@ -1,0 +1,43 @@
+#Este es el bueno
+import serial
+import re
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import time
+
+def create_web_driver():
+    options = Options()
+    driver = webdriver.Chrome(options=options)
+    return driver
+
+# Conectarse al Arduino
+ser = serial.Serial('COM4', 9600)  # Reemplaza 'COMX' con el puerto adecuado
+
+driver = create_web_driver()
+driver.get("https://guia-phi.vercel.app/")
+
+guardar_url = driver.current_url
+edificio_1_activado = False  # Variable para rastrear si el edificio 1 está activado
+
+while True:
+    time.sleep(1)
+    if guardar_url != driver.current_url:
+        print("URL anterior:", guardar_url)
+        print("URL actual:", driver.current_url)
+        guardar_url = driver.current_url
+        
+        if "_x31_,_x32_" in driver.current_url:
+            print("Se ha activado el camino hacia el Edificio A")
+            edificio_1_activado = True
+            ser.write(b'1')  # Enciende el pin 13
+        
+        elif "_x35_,_x32_4,_x32_5,_x32_7" in driver.current_url:
+            print("Se ha activado el camino hacia el Edificio C")
+            ser.write(b'2')  # Enciende el pin 12
+            edificio_1_activado = False  # Reinicia el estado del edificio 1
+        
+        elif "_x35_,_x31_6,_x31_7,_x32_0,_x32_5,_x32_7" in driver.current_url:
+            if not edificio_1_activado:
+                print("Se ha activado el camino hacia el polideportivo")
+                ser.write(b'3')  # Enciende el pin 11
+            #edificio_1_activado = False  # Reinicia el estado del edificio 1

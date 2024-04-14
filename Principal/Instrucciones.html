@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>Contenido Insertado</title>
+  <style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f7f7f7;
+        color: #333;
+        line-height: 1.1; /* Interlineado muy reducido */
+    }
+
+    #nuevoDiv {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 15px; /* Establece las esquinas redondeadas */
+    }
+
+    h1 {
+        font-size: 32px;
+        margin-bottom: 20px;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-bottom: 15px;
+    }
+
+    p, ul, li {
+        font-size: 16px;
+        margin-bottom: 5px; /* Espacio entre los párrafos y elementos li */
+        text-align: justify; /* Texto justificado */
+    }
+
+    ul {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+    #li1, #li2, #li3, #li4 {
+        position: relative;
+        padding-left: 20px;
+    }
+
+    #li1::before, #li2::before, #li3::before, #li4::before {
+        content: "•";
+        color: #bcb381;
+        position: absolute;
+        left: 0;
+    }
+
+    /* Cambiar el color de la palabra "rojo" a rojo */
+    .color-rojo {
+        color: red;
+        font-weight: bold;
+    }
+
+    /* Estilo del botón Reiniciar ubicación */
+    #botonWrapper {
+        text-align: center;
+        margin-top: 20px; /* Mover el botón hacia abajo */
+    }
+
+    #reiniciarUbicacion {
+        background-color: #037870;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold; /* Texto en negrita */
+    }
+
+    #reiniciarUbicacion:hover {
+        background-color: #048c8c;
+    }
+  </style>
+</head>
+<body>
+  <div id="nuevoDiv">
+    <h1>Sistema de Ubicación en ITESA</h1>
+    <h2>Instrucciones</h2>
+    <p>Esta vista representa a escala el Instituto Tecnológico Superior del Oriente del Estado de Hidalgo (ITESA), con el fin de facilitar la orientación en el campus.</p>
+    <p>Imaginando que te encuentras en la entrada de la casa universitaria, sigue las siguientes indicaciones:</p>
+    <ul>
+      <li id="li1">Piensa a qué edificio quieres dirigirte.</li>
+      <li id="li2">Habiendo definido el destino, selecciona el camino a seguir.</li>
+      <li id="li3">Para elegir el camino, haz clic en los fragmentos correspondientes.</li>
+      <li id="li4">Al seleccionar cada fragmento, se iluminará en color <span class="color-rojo">rojo</span>.</li>
+      <li id="li4">Haz clic en el botón "Validar Ruta" para verificar la ruta trazada.</li>
+    </ul>
+    <p>Una vez seleccionada la opción, podrás visualizar en tiempo real en la maqueta institucional la ruta elegida, mientras se encienden las tiras LED correspondientes.</p>
+    <p>Para obtener más información acerca del proyecto o de cómo usar esta plataforma, navega a través de la barra de menú.</p>
+
+    <!-- Wrapper para centrar el botón -->
+    <div id="botonWrapper">
+        <!-- Botón Reiniciar ubicación -->
+        <button id="reiniciarUbicacion">Reiniciar ubicación</button>
+    </div>
+  </div>
+</body>
+
+<script>
+    $("#reiniciarUbicacion").click(function() {
+        location.reload();
+        location.href = location.origin + location.pathname;
+    });
+</script>
+</html>

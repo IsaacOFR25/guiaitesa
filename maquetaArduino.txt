@@ -1,0 +1,72 @@
+#include <Adafruit_NeoPixel.h>
+
+#define PIN_LED_ROJO 13   // Pin al que está conectada la tira LED roja
+#define PIN_LED_VERDE 12  // Pin al que está conectada la tira LED verde
+#define PIN_LED_MORADO_1 11 // Primer pin al que está conectada la tira LED morada
+#define PIN_LED_MORADO_2 10 // Segundo pin al que está conectada la tira LED morada
+#define NUM_LEDS 60       // Número de LEDs en tu tira LED (cualquier valor aquí, ya que no estamos usando la tira LED en Arduino)
+
+Adafruit_NeoPixel Tira13 = Adafruit_NeoPixel(NUM_LEDS, PIN_LED_ROJO, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel Tira12 = Adafruit_NeoPixel(NUM_LEDS, PIN_LED_VERDE, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel Tira11 = Adafruit_NeoPixel(NUM_LEDS, PIN_LED_MORADO_1, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel Tira10 = Adafruit_NeoPixel(NUM_LEDS, PIN_LED_MORADO_2, NEO_GRB + NEO_KHZ800);
+
+void setup() {
+  Tira13.begin();
+  Tira13.show();      // Apagar todos los LEDs al principio
+  Tira12.begin();
+  Tira12.show();     // Apagar todos los LEDs al principio
+  Tira11.begin();
+  Tira11.show();   // Apagar todos los LEDs al principio
+  Tira10.begin();
+  Tira10.show();   // Apagar todos los LEDs al principio
+  Serial.begin(9600);   // Iniciar comunicación serial a 9600 baudios
+}
+
+void loop() {
+  if (Serial.available() > 0) {
+    char receivedChar = Serial.read();
+    if (receivedChar == '1') {
+      apagarLED(Tira10);
+      apagarLED(Tira11);
+      apagarLED(Tira12);
+      encenderLED(Tira13, Tira13.Color(255, 0, 0)); // Encender la tira LED roja en rojo
+      delay(20000); // Esperar 5 segundos
+      apagarLED(Tira13); // Apagar la tira LED roja
+
+
+    } else if (receivedChar == '2') {
+      apagarLED(Tira13);
+      apagarLED(Tira10);
+      encenderLED(Tira11, Tira11.Color(128, 0, 128)); // Encender la tira LED morada en morado
+      encenderLED(Tira12, Tira12.Color(128, 0, 128)); // Encender la tira LED morada en morado
+      delay(20000); // Esperar 5 segundos
+      apagarLED(Tira11); // Apagar la tira LED morada
+      apagarLED(Tira12); // Apagar la tira LED morada
+
+
+    } else if (receivedChar == '3') {
+      apagarLED(Tira13);
+      apagarLED(Tira12);
+      encenderLED(Tira11, Tira12.Color(0, 0, 255)); // Encender la tira LED verde en azul
+      encenderLED(Tira10, Tira10.Color(0, 0, 255)); // Encender la tira LED verde en azul
+      delay(20000); // Esperar 5 segundos
+      apagarLED(Tira11); // Apagar la tira LED azul
+      apagarLED(Tira10); // Apagar la tira LED azul
+    }
+  }
+}
+
+void encenderLED(Adafruit_NeoPixel &strip, uint32_t color) {
+  for (int i = 0; i < strip.numPixels(); i++) {
+    strip.setPixelColor(i, color); // Establecer color en todos los LEDs
+  }
+  strip.show();
+}
+
+void apagarLED(Adafruit_NeoPixel &strip) {
+  for (int i = 0; i < strip.numPixels(); i++) {
+    strip.setPixelColor(i, 0); // Apagar todos los LEDs
+  }
+  strip.show();
+}
